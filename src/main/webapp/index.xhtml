@@ -1,0 +1,52 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<meta charset="UTF-8" />
+	<title>Cadastro de Aluno</title>
+</h:head>
+<h:body>
+	<h:form id="formC">
+		<div class="div1">
+			<div class="div2">
+				<p:panelGrid styleClass="div3" columns="2" cellpadding="10"
+					cellspacing="1">
+					<p:outputLabel value="Nome: " />
+					<p:inputText id="nome" value="#{cadastroMB.u.nome}" />
+					<p:outputLabel value="Sobrenome: " />
+					<p:inputText id="sobrenome" value="#{cadastroMB.u.sobrenome}" />
+					<p:outputLabel value="RA: " />
+					<p:inputMask id="ra" value="#{cadastroMB.u.ra}" mask="99999999" />
+					<p:outputLabel value="CPF: " />
+					<p:inputMask value="#{cadastroMB.u.cpf}" mask="999.999.999-99"></p:inputMask>
+				</p:panelGrid>
+				<div class="div4">
+					<p:commandButton id="script" value="Script"
+						actionListener="#{cadastroMB.script}" update=":formC"/>
+					<p:commandButton id="add" value="Adicionar"
+						actionListener="#{cadastroMB.Adicionar}" update=":formC" />
+				</div>
+			</div>
+			<div class="div5">
+				<p:dataTable id="lols" value="#{cadastroMB.listU}" var="list">
+					<p:column headerText="Nome">
+						<p:outputLabel value="#{list.nome}" />
+					</p:column>
+					<p:column headerText="Sobrenome">
+						<p:outputLabel value="#{list.sobrenome}" />
+					</p:column>
+					<p:column headerText="RA">
+						<p:outputLabel value="#{list.ra}" />
+					</p:column>
+					<p:column headerText="CPF">
+						<p:outputLabel value="#{list.cpf}" />
+					</p:column>
+				</p:dataTable>
+				acahuoh
+			</div>
+		</div>
+	</h:form>
+</h:body>
+</html>
