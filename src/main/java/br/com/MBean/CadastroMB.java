@@ -1,9 +1,5 @@
 package br.com.MBean;
 
-import java.io.File;
-
-import java.io.FileOutputStream;
-
 import java.util.ArrayList;
 
 import java.util.List;
@@ -15,12 +11,8 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
-import java.io.FileInputStream;
 import java.io.*;
 import org.apache.poi.ss.usermodel.*;
-import java.util.Iterator;
-import java.io.FileWriter;
-import au.com.bytecode.opencsv.CSVWriter;
 
 import br.com.Entities.Usuario;
 
@@ -37,7 +29,7 @@ public class CadastroMB {
 	HSSFSheet fistSheet;
 
 	private static final String fileName = "Z:\\Teste\\CadastroAlunos.xls";
-	private static final String filename2 = "CadastroAlunos.xls";
+	private static final String filename2 = "Z:\\Teste\\CadastroAlunos.csv";
 
 	public void Adicionar() {
 		String a = u.getCpf().substring(0, 3);
@@ -123,7 +115,7 @@ public class CadastroMB {
 			row.createCell(23).setCellValue(u.getCargo());
 			row.createCell(24).setCellValue(u.getSenhaNuncaExpira());
 			row.createCell(25).setCellValue(u.getContaHabilitada());
-			row.createCell(26).setCellValue(u.getOuDestino());
+			row.createCell(26).setCellValue('"' + u.getOuDestino() + '"');
 			row.createCell(27).setCellValue(u.getProxyAddresses());
 
 			i++;
@@ -140,41 +132,27 @@ public class CadastroMB {
 		}
 	}
 
-	private void converter() {
-		// First we read the Excel file in binary format into FileInputStream
-		FileInputStream input_document = new FileInputStream(new File(CadastroMB.fileName));
-		// Read workbook into HSSFWorkbook
-		HSSFWorkbook my_xls_workbook = new HSSFWorkbook(input_document);
-		// Read worksheet into HSSFSheet
-		HSSFSheet my_worksheet = my_xls_workbook.getSheetAt(0);
-		// To iterate over the rows
-		Iterator<Row> rowIterator = my_worksheet.iterator();
-		// OpenCSV writer object to create CSV file
-		FileWriter my_csv = new FileWriter(CadastroMB.filename2);
-		CSVWriter my_csv_output = new CSVWriter(my_csv);
-		// Loop through rows.
-		while (rowIterator.hasNext()) {
-			Row row = rowIterator.next();
-			int i = 0;// String array
-			// change this depending on the length of your sheet
-			String[] csvdata = new String[2];
-			Iterator<Cell> cellIterator = row.cellIterator();
-			while (cellIterator.hasNext()) {
-				Cell cell = cellIterator.next(); // Fetch CELL
-				switch (cell.getCellType()) { // Identify CELL type
-				// you need to add more code here based on
-				// your requirement / transformations
-				case Cell.CELL_TYPE_STRING:
-					csvdata[i] = cell.getStringCellValue();
-					break;
+	private void converter() throws FileNotFoundException, IOException {
+		File f = new File(CadastroMB.fileName);
+		InputStream fs = new FileInputStream(f);
+		Workbook wb = WorkbookFactory.create(fs);
+
+		DataFormatter formatter = new DataFormatter();
+		PrintStream out = new PrintStream(new FileOutputStream(CadastroMB.filename2), true, "UTF-8");
+		for (Sheet sheet : wb) {
+			for (Row row : sheet) {
+				boolean firstCell = true;
+				for (Cell cell : row) {
+					if (!firstCell) {
+						out.print(',');
+					}
+					String text = formatter.formatCellValue(cell);
+					out.print(text);
+					firstCell = false;
 				}
-				i = i + 1;
+				out.println();
 			}
-			my_csv_output.writeNext(csvdata);
 		}
-		my_csv_output.close(); // close the CSV file
-		// we created our file..!!
-		input_document.close(); // close xls
 	}
 
 	private void zerar() {
