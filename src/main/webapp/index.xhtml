@@ -18,13 +18,14 @@
 					<p:outputLabel value="Sobrenome: " />
 					<p:inputText id="sobrenome" value="#{cadastroMB.u.sobrenome}" />
 					<p:outputLabel value="RA: " />
-					<p:inputMask id="ra" value="#{cadastroMB.u.ra}" mask="99999999" />
+					<p:inputMask id="ra" value="#{cadastroMB.u.usuario}"
+						mask="99999999" />
 					<p:outputLabel value="CPF: " />
-					<p:inputMask value="#{cadastroMB.u.cpf}" mask="999.999.999-99"></p:inputMask>
+					<p:inputMask value="#{cadastroMB.u.cpf}" mask="999.999.999-99" />
 				</p:panelGrid>
 				<div class="div4">
 					<p:commandButton id="script" value="Script"
-						actionListener="#{cadastroMB.script}" update=":formC"/>
+						actionListener="#{cadastroMB.script}" update=":formC" />
 					<p:commandButton id="add" value="Adicionar"
 						actionListener="#{cadastroMB.Adicionar}" update=":formC" />
 				</div>
@@ -38,13 +39,12 @@
 						<p:outputLabel value="#{list.sobrenome}" />
 					</p:column>
 					<p:column headerText="RA">
-						<p:outputLabel value="#{list.ra}" />
+						<p:outputLabel value="#{list.usuario}" />
 					</p:column>
 					<p:column headerText="CPF">
 						<p:outputLabel value="#{list.cpf}" />
 					</p:column>
 				</p:dataTable>
-				acahuoh
 			</div>
 		</div>
 	</h:form>
