@@ -92,7 +92,7 @@ public class CadastroMB {
 			row.createCell(0).setCellValue(u.getProcessar());
 			row.createCell(1).setCellValue(u.getUsuario());
 			row.createCell(2).setCellValue(u.getNome());
-			row.createCell(3).setCellValue(u.getSobrenome());
+			row.createCell(3).setCellValue(" " + u.getSobrenome());
 			row.createCell(4).setCellValue(u.getIniciais());
 			row.createCell(5).setCellValue(u.getDescricao());
 			row.createCell(6).setCellValue(u.getEscritorio());
