@@ -126,7 +126,7 @@ public class CadastroMB {
 			workbook.write(fos);
 			fos.close();
 			converter();
-
+			listU = new ArrayList<Usuario>();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
